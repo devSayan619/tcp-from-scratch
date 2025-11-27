@@ -1,0 +1,58 @@
+package com.pkg.http;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        FileInputStream fis = null;
+        String currentLine = "";
+
+        try
+        {
+            fis = new FileInputStream("message.txt");
+            byte[] buffer = new byte[8];
+            int byteRead;
+
+            while ((byteRead = fis.read(buffer)) != -1)
+            {
+                String chunk = new String(buffer, 0, byteRead);
+//                System.out.println(chunk);
+                String [] parts = chunk.split("\n",-1);
+                for(int i =0; i<parts.length-1;++i)
+                {
+                    System.out.printf("read: %s\n", currentLine+parts[i]);
+                    currentLine="";
+                }
+                currentLine +=parts[parts.length-1];
+            }
+
+            if(!currentLine.isEmpty())
+            {
+                System.out.printf("read: %s\n",currentLine);
+            }
+        } 
+
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            if (fis != null)
+            {
+                try
+                {
+                    fis.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
