@@ -1,4 +1,0 @@
-INDEX VERSION 1.134+/media/sayan/New Volume/CODING/PROJECT/Boot-dev/http-tcp-server/.metadata/.plugins/org.eclipse.jdt.core
-2139637896.index
-1865797976.index
-900586112.index
