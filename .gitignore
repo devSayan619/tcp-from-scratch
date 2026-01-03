@@ -1,0 +1,19 @@
+# Eclipse specific files
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Eclipse project files (Optional: remove these # if you want to be purely IDE-agnostic)
+.project
+.classpath
+
+# Compiled class files (Double safety)
+*.class
