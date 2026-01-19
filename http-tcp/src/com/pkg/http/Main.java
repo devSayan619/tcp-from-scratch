@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main 
 {
@@ -79,7 +79,7 @@ public class Main
 	//create the moduler function 
 	public static BlockingQueue<String> getLinesChannel(InputStream fir)
 	{
-		BlockingQueue<String> bq = new LinkedBlockingDeque<>();
+		BlockingQueue<String> bq = new LinkedBlockingQueue<String>();
 
 		// Start the thread
 		Thread worker =new Thread(()->{
