@@ -2,9 +2,10 @@ package practice;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -12,32 +13,65 @@ public class Main
 {
 	public static void main(String[] args)
 	{
+		ServerSocket conn = null; 
 		FileInputStream fir =null; 
 		try 
 		{
-			fir = new FileInputStream("src/message.txt");
-			BlockingQueue<String> ans = getLinesChannel(fir);
+			conn = new ServerSocket(42069);
+			System.out.println("server is running on 42069 port number");
 
 			//put the output 
 			while(true)
 			{
-				String line;
-				try {
-					line = ans.take();
-					if(line.equals("EOF"))
-					{
-						break;
+					Socket cliSocket = conn.accept();
+					System.out.println("Connection is established");
+					BlockingQueue<String> ans = getLinesChannel(cliSocket.getInputStream());
+					try {
+						while(true)
+						{
+							String line;
+							line = ans.take();
+							if(line.equals("EOF"))
+							{
+								System.out.println("conneciton  is closed");
+								break;
+							}
+							
+							System.out.println(line);
+						}
+					} 
+					catch (InterruptedException e)
+					{	
+						Thread.currentThread().interrupt();
 					}
-					System.out.printf("read: %s\n",line);
-				} 
-				catch (InterruptedException e)
-				{	
-					Thread.currentThread().interrupt();
+					finally
+					{
+						if(fir!=null)
+						{
+							try 
+							{
+								fir.close();
+							} 
+							catch (IOException e)
+							{
+								e.printStackTrace();
+							}
+						}
+						if(cliSocket!=null)
+						{
+							try 
+							{
+								cliSocket.close();
+							} 
+							catch (IOException e)
+							{
+							}
+						}
+					}
 				}
-			}
 
 		} 
-		catch (FileNotFoundException e) {
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
