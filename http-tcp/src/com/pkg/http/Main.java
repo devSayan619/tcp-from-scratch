@@ -24,7 +24,7 @@ public class Main
 			while(true)
 			{
 					Socket cliSocket = conn.accept();
-					System.out.println("Connection is established");
+					System.out.println("Connection is established "+cliSocket);
 					BlockingQueue<String> ans = getLinesChannel(cliSocket.getInputStream());
 					try {
 						while(true)
