@@ -4,5 +4,7 @@
 /**
  * 
  */
-module lesson1 {
+module lesson1 
+{
+	requires org.junit.jupiter.api;
 }
